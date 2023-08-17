@@ -25,7 +25,10 @@ namespace Learn_Asp_Net_Identity.Pages.Account
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, "admin@mywebsite.com"),
-                new Claim(ClaimTypes.Name, "admin")
+                new Claim(ClaimTypes.Name, "admin"),
+                new Claim("Department","HR"),
+                new Claim("Admin","true"),
+                new Claim("Manager","true"),
             };
             //create an identity from the claims
             //var identity = new ClaimsIdentity(claims);
