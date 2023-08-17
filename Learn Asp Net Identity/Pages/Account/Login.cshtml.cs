@@ -20,22 +20,29 @@ namespace Learn_Asp_Net_Identity.Pages.Account
         {
             if (!ModelState.IsValid) return Page();
             if (credentialsDTO.Username != "admin" && credentialsDTO.Password != "Password") return Page();
-            
+
             //creating the security context 
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, "admin@mywebsite.com"),
                 new Claim(ClaimTypes.Name, "admin"),
-                new Claim("Department","HR"),
-                new Claim("Admin","true"),
-                new Claim("Manager","true"),
+                new Claim("Department", "HR"),
+                new Claim("Admin", "true"),
+                new Claim("Manager", "true"),
+                new Claim("EmploymentDate", "2021-05-01"),
             };
             //create an identity from the claims
             //var identity = new ClaimsIdentity(claims);
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            
+
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+            var authProperties = new AuthenticationProperties()
+            {
+                IsPersistent = credentialsDTO.RememberMe
+            };
+
+
             await HttpContext.SignInAsync("MyCookie", claimsPrincipal);
             return Redirect("/Index");
         }

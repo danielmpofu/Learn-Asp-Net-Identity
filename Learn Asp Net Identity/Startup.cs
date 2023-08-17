@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Learn_Asp_Net_Identity.AuthorizationRequirements;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Learn_Asp_Net_Identity
 {
@@ -37,8 +39,19 @@ namespace Learn_Asp_Net_Identity
                 options.AddPolicy("MustBelongToHRDepartment", policy => policy.RequireClaim("Department", "HR"));
 
                 options.AddPolicy("HrManagerOnly",
-                    policy => policy.RequireClaim("Department", "HR").RequireClaim("Manager"));
+                    policy =>  policy
+                        .RequireClaim("Department", "HR")
+                            .RequireClaim("Manager")
+                        .Requirements.Add(new HRManagerAuthRequirements(3))
+                    );
             });
+            services.AddSingleton<IAuthorizationHandler,HRManagerAuthRequirements.HRManagerProbationHandler>();
+
+            services.AddHttpClient(
+                "OurWebApiClient", client =>
+                {
+                    client.BaseAddress = new Uri("http://localhost:5254/");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

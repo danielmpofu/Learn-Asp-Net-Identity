@@ -1,10 +1,9 @@
-@model TModel
 
 @if (User.Identity.IsAuthenticated)
 {
-    <form method="post" class="form-inline" asp-page="/Account/Logout">
+    <form method="post" class="form-inline" asp-page="/Account/SignOut">
          Welcome @User.Identity.Name
-         <button class="btn "></button>
+         <button class="btn ml-2"> Logout</button>
     </form>
 }
 else

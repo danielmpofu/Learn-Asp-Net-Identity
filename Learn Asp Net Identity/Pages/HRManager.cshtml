@@ -3,6 +3,9 @@
 @{
 }
 <div>HR Manager page</div>
-
-.. 
-this contains some HR secrets only
+<ul>
+    @foreach (var item in Model.WeatherForecastDtos)
+    {
+        <li>@item.Date.ToLongDateString() - @item.Summary</li>
+    }
+</ul>

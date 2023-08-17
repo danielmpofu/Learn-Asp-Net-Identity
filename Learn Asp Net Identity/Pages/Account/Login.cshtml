@@ -17,6 +17,13 @@
             <input type="text" asp-for="credentialsDTO.Password" class="form-control">
             <span class="text-danger" asp-validation-for="credentialsDTO.Password"></span>
         </div>
+        
+        <div class="mt-2 mb-2 form-check">
+            <input type="checkbox" name="" class="form-check-inline" 
+                   asp-for="credentialsDTO.RememberMe" value="Remember Me" id="">
+            <label asp-for="credentialsDTO.RememberMe"></label>
+             <span class="text-danger" asp-validation-for="credentialsDTO.RememberMe"></span>
+        </div>
 
         <input type="submit" value="Login" class="btn btn-primary mt-2">
 
