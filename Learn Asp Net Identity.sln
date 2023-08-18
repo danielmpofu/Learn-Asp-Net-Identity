@@ -5,7 +5,9 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learn Asp Net Identity", "Learn Asp Net Identity\Learn Asp Net Identity.csproj", "{B4919075-6625-4D88-AB1C-84B2DAA58385}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DramaAPI", "DramaAPI\DramaAPI.csproj", "{BCDDF99A-70D5-466B-89A1-9F0E04631884}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DramaAPI", "DramaAPI\DramaAPI.csproj", "{BCDDF99A-70D5-466B-89A1-9F0E04631884}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web App", "Web App\Web App.csproj", "{714B59DD-9923-46E5-95D2-ADCEE66E50BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BCDDF99A-70D5-466B-89A1-9F0E04631884}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCDDF99A-70D5-466B-89A1-9F0E04631884}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCDDF99A-70D5-466B-89A1-9F0E04631884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{714B59DD-9923-46E5-95D2-ADCEE66E50BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{714B59DD-9923-46E5-95D2-ADCEE66E50BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{714B59DD-9923-46E5-95D2-ADCEE66E50BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{714B59DD-9923-46E5-95D2-ADCEE66E50BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
