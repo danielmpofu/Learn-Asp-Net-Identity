@@ -3,9 +3,27 @@
 @{
 }
 <div>HR Manager page</div>
-<ul>
-    @foreach (var item in Model.WeatherForecastDtos)
-    {
-        <li>@item.Date.ToLongDateString() - @item.Summary</li>
-    }
-</ul>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Date</td>
+            <td>Temp C</td>
+            <td>Temp F</td>
+            <td>Summay</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WeatherForecastDtos)
+        {
+            <tr>
+                <td>@item.Date.ToLongDateString()</td>
+                <td>@item.TemperatureC</td>
+                <td>@item.TemperatureF</td>
+                <td>@item.Summary</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+

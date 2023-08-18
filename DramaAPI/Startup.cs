@@ -7,11 +7,13 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Learn_Asp_Net_Identity.AuthorizationRequirements;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
-namespace Learn_Asp_Net_Identity
+namespace DramaAPI
 {
     public class Startup
     {
@@ -25,36 +27,36 @@ namespace Learn_Asp_Net_Identity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-            services.AddAuthentication().AddCookie("MyCookie", options =>
-            {
-                options.Cookie.Name = "MyCookie";
-                options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Account/AccessDenied";
-            });
+            byte[] securityKeyBytes = Encoding.UTF8.GetBytes("123abcdefghijklmnopqrstuvwxyz12346512345678");
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(
+                    options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(securityKeyBytes),
+                            ValidateLifetime = true,
+                            ValidateAudience = false,
+                            ValidateIssuer = false,
+                            ClockSkew = TimeSpan.Zero
+                        };
+                    });
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin"));
-                options.AddPolicy("MustBelongToHRDepartment", policy => policy.RequireClaim("Department", "HR"));
-
-                options.AddPolicy("HrManagerOnly",
-                    policy => policy
-                        .RequireClaim("Department", "HR")
-                        .RequireClaim("Manager")
-                        .Requirements.Add(new HRManagerAuthRequirements(3))
-                );
+                options.AddPolicy("AdminOnly", policy=>policy.RequireClaim("Admin"));
             });
-            services.AddSingleton<IAuthorizationHandler, HRManagerAuthRequirements.HRManagerProbationHandler>();
-
-            services.AddHttpClient(
-                "OurWebApiClient", client => { client.BaseAddress = new Uri("http://localhost:5254/"); });
-
-            services.AddSession(options =>
+            services.AddRazorPages();
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
             {
-                options.Cookie.HttpOnly = true;
-                options.IdleTimeout = TimeSpan.FromDays(1);
-                options.Cookie.IsEssential = true;
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dramatic API", Version = "v1" });
             });
         }
 
@@ -64,6 +66,8 @@ namespace Learn_Asp_Net_Identity
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DramaApi v1"));
             }
             else
             {
@@ -72,14 +76,14 @@ namespace Learn_Asp_Net_Identity
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseSession();
+
             app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
         }
     }

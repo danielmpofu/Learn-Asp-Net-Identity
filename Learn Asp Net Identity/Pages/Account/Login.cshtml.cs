@@ -41,8 +41,7 @@ namespace Learn_Asp_Net_Identity.Pages.Account
             {
                 IsPersistent = credentialsDTO.RememberMe
             };
-
-
+            
             await HttpContext.SignInAsync("MyCookie", claimsPrincipal);
             return Redirect("/Index");
         }
