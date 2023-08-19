@@ -1,0 +1,53 @@
+@page
+@model Web_App.Pages.Account.Login
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Login Page</title>
+</head>
+<body>
+<div>
+    
+    <div style=" padding:20px" class="container border">
+        
+        <h1>User Login</h1>
+        
+        <form method="post">
+            <div class="alert alert-danger" asp-validation-summary="All"></div>
+            <div class="form-group">
+                <label asp-for="credentialsDTO.Email"></label>
+                <input type="text" asp-for="credentialsDTO.Email" class="form-control">
+                <span class="text-danger" asp-validation-for="credentialsDTO.Email"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="credentialsDTO.Password"></label>
+                <input type="text" asp-for="credentialsDTO.Password" class="form-control">
+                <span class="text-danger" asp-validation-for="credentialsDTO.Password"></span>
+            </div>
+
+            <div class="mt-2 mb-2 form-check">
+                <input type="checkbox" name="" class="form-check-inline"
+                       asp-for="credentialsDTO.RememberMe" value="Remember Me" id="">
+                <label asp-for="credentialsDTO.RememberMe"></label>
+                <span class="text-danger" asp-validation-for="credentialsDTO.RememberMe"></span>
+            </div>
+
+            <input type="submit" value="Login" class="btn btn-primary mt-2">
+            <a asp-page="/Account/Register"
+                   value="Sign Up"
+                   type="button"
+                   class="btn btn-outline-primary mt-2">Sign Up</a>
+
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
