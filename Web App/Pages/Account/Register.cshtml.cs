@@ -38,7 +38,14 @@ public class Register : PageModel
             UserName = SplitEmail(RegisterViewModel.Email),
         };
         var result = await _userManager.CreateAsync(identityUser, RegisterViewModel.Password);
-        if (result.Succeeded) return RedirectToPage("/account/Login");
+        if (result.Succeeded)
+        {
+            var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
+            return RedirectToPage("/Account/ConfirmEmail",
+                new { userId = identityUser.Id, token = emailConfirmationToken });
+            //return RedirectToPage("/account/Login");
+        }
+
         foreach (var error in result.Errors)
         {
             ModelState.AddModelError("RegistrationError_" + error.Code, error.Description);
