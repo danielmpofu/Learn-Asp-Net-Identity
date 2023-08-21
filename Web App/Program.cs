@@ -38,6 +38,10 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
     }
 });
 
+builder.Services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDBContext>()
+    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>(TokenOptions.DefaultProvider);
+
 builder.Services.ConfigureApplicationCookie(
     options =>
     {
